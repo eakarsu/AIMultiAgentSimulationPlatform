@@ -8,11 +8,12 @@ import AgentsCrudPage from './pages/AgentsCrudPage';
 import RoundsPage from './pages/RoundsPage';
 import InteractionsPage from './pages/InteractionsPage';
 import AIPage from './pages/AIPage';
+import AIInsightsPage from './pages/AIInsightsPage';
 function App() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'));
   const [page, setPage] = useState('dashboard');
   if (!loggedIn) return <LoginPage onLogin={() => setLoggedIn(true)} />;
-  const pages = { dashboard: <DashboardPage onNavigate={setPage} />, simulations: <SimulationsPage />, agents: <AgentsCrudPage />, rounds: <RoundsPage />, interactions: <InteractionsPage />, ai: <AIPage /> };
+  const pages = { dashboard: <DashboardPage onNavigate={setPage} />, simulations: <SimulationsPage />, agents: <AgentsCrudPage />, rounds: <RoundsPage />, interactions: <InteractionsPage />, ai: <AIPage />, aiInsights: <AIInsightsPage /> };
   return (
     <BrowserRouter><div style={{ display: 'flex', minHeight: '100vh', background: '#1a1a2e' }}>
       <Sidebar active={page} onNavigate={setPage} />
