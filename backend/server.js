@@ -7,7 +7,11 @@ const app = express();
 // Security
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  origin: function(origin, cb) {
+    const allowed = [process.env.CLIENT_URL, 'http://localhost:3000', 'http://localhost:3013'].filter(Boolean);
+    if (!origin || allowed.includes(origin)) return cb(null, true);
+    return cb(null, true); // permissive in dev
+  },
   credentials: true,
 }));
 app.use(express.json());
@@ -49,6 +53,7 @@ pool.query(`
   );
 `).catch(e => console.error('Schema migration error:', e.message));
 
+app.get('/api/health', (req, res) => res.json({ status: 'ok', ts: new Date().toISOString() }));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/simulations', require('./routes/simulations'));
 app.use('/api/agents-crud', require('./routes/agents_crud'));
@@ -99,3 +104,9 @@ try { const _gap_websocket = require('./routes/gap-websocket'); app.use('/api/ga
 try { const _gap_public = require('./routes/gap-public'); app.use('/api/gap-public', _gap_public); } catch(e) { console.error('gap mount fail public:', e.message); }
 try { const _gap_notifications = require('./routes/gap-notifications'); app.use('/api/gap-notifications', _gap_notifications); } catch(e) { console.error('gap mount fail notifications:', e.message); }
 // === End Batch 05 Mounts ===
+
+// Custom views (mounted BEFORE 404 fallback)
+try { app.use('/api/custom-views', require('./routes/customViews')); } catch(e) { console.error('custom-views mount fail:', e.message); }
+
+// 404 fallback for unknown /api routes (must remain last)
+app.use('/api', (req, res) => res.status(404).json({ error: 'Not found' }));

@@ -50,3 +50,19 @@ export const aiAnalyzeStrategies = (d) =>
 
 export const getSimulationStreamUrl = (id) =>
   `${API}/simulations/${id}/stream?token=${localStorage.getItem('token')}`;
+
+// Custom Views API
+export const cvGetTimeline = (simId) =>
+  fetch(`${API}/custom-views/timeline${simId ? `?simulation_id=${simId}` : ''}`, { headers: h() }).then(r => r.json());
+export const cvGetHeatmap = (simId) =>
+  fetch(`${API}/custom-views/collaboration-heatmap${simId ? `?simulation_id=${simId}` : ''}`, { headers: h() }).then(r => r.json());
+export const cvGetReport = (id) =>
+  fetch(`${API}/custom-views/report/${id}`, { headers: h() }).then(r => r.json());
+export const cvListRules = () =>
+  fetch(`${API}/custom-views/rules`, { headers: h() }).then(r => r.json());
+export const cvCreateRule = (d) =>
+  fetch(`${API}/custom-views/rules`, { method: 'POST', headers: h(), body: JSON.stringify(d) }).then(r => r.json());
+export const cvUpdateRule = (d) =>
+  fetch(`${API}/custom-views/rules`, { method: 'PUT', headers: h(), body: JSON.stringify(d) }).then(r => r.json());
+export const cvDeleteRule = (id) =>
+  fetch(`${API}/custom-views/rules`, { method: 'DELETE', headers: h(), body: JSON.stringify({ id }) }).then(r => r.json());
