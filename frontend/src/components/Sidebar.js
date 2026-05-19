@@ -6,6 +6,8 @@ const items = [
   { key: 'rounds', icon: '🔄', label: 'Rounds' },
   { key: 'interactions', icon: '💬', label: 'Interactions' },
   { key: 'ai', icon: '🧠', label: 'AI Designer' },
+  { key: 'aiInsights', icon: '📈', label: 'AI Insights' },
+  { key: 'customViews', icon: '🗺️', label: 'Sim Views' },
 ];
 export default function Sidebar({ active, onNavigate }) {
   return (
