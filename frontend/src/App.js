@@ -10,6 +10,12 @@ import InteractionsPage from './pages/InteractionsPage';
 import AIPage from './pages/AIPage';
 import AIInsightsPage from './pages/AIInsightsPage';
 import CustomViewsPage from './pages/CustomViewsPage';
+import EmergentBehaviorHeatmap from './pages/EmergentBehaviorHeatmap';
+
+import CodexCustomVizFeature from './pages/CodexCustomVizFeature';
+import CodexOperationsFeature from './pages/CodexOperationsFeature';
+
+import TimelineView from './pages/TimelineView';
 
 function Shell() {
   const [page, setPage] = useState('dashboard');
@@ -42,7 +48,12 @@ function Shell() {
       <Sidebar active={page} onNavigate={handleNavigate} />
       <div style={{ marginLeft: 240, padding: 30, flex: 1 }}>
         <Routes>
+        <Route path="/insights/timeline" element={<TimelineView />} />
+        <Route path="/codex/custom-viz" element={<CodexCustomVizFeature />} />
+        <Route path="/codex/operations" element={<CodexOperationsFeature />} />
+
           <Route path="/custom-views" element={<CustomViewsPage />} />
+          <Route path="/emergent-behavior-heatmap" element={<EmergentBehaviorHeatmap />} />
           <Route path="*" element={pages[page] || pages.dashboard} />
         </Routes>
       </div>

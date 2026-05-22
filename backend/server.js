@@ -61,6 +61,7 @@ app.use('/api/rounds', require('./routes/rounds'));
 app.use('/api/interactions', require('./routes/interactions'));
 app.use('/api/agents', require('./routes/agents'));
 app.use('/api/ai', require('./routes/ai'));
+app.use('/api/emergent-behavior-heatmap', require('./routes/emergentBehaviorHeatmap'));
 // Apply pass 5 — backlog
 app.use('/api/scenario-templates', require('./routes/scenarioTemplates'));
 app.use('/api', require('./routes/exports'));

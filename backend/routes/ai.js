@@ -5,7 +5,7 @@ const pool = require('../models/db');
 
 router.use(auth);
 
-const MODEL = 'anthropic/claude-3-5-sonnet-20241022';
+const MODEL = (process.env.OPENROUTER_MODEL || 'anthropic/claude-haiku-4.5').replace(/^"|"$/g, '');
 
 function parseAIJson(raw) {
   try { return JSON.parse(raw); } catch {}
