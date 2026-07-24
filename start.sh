@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BACKEND_PORT="${PORT:-3012}"
+set -a
+source "$PROJECT_DIR/.env"
+set +a
+BACKEND_PORT="${BACKEND_PORT:-${PORT:-3012}}"
 FRONTEND_PORT="${FRONTEND_PORT:-3013}"
 JWT_SECRET_VALUE="${JWT_SECRET:-}"
 if [[ ! -d "$PROJECT_DIR/backend/node_modules" || ! -d "$PROJECT_DIR/frontend/node_modules" ]]; then
@@ -24,7 +27,7 @@ for port in "$BACKEND_PORT" "$FRONTEND_PORT"; do
 done
 (cd "$PROJECT_DIR/backend" && PORT="$BACKEND_PORT" npm start) &
 backend_pid=$!
-(cd "$PROJECT_DIR/frontend" && BROWSER=none PORT="$FRONTEND_PORT" npm start) &
+(cd "$PROJECT_DIR/frontend" && BROWSER=none PORT="$FRONTEND_PORT" REACT_APP_API_URL="http://127.0.0.1:$BACKEND_PORT/api" npm start) &
 frontend_pid=$!
 cleanup() {
   kill "$backend_pid" "$frontend_pid" 2>/dev/null || true

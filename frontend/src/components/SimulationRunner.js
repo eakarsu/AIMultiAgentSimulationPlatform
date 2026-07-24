@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const API = 'http://localhost:3012/api';
+const API = process.env.REACT_APP_API_URL || '/api';
 
 const statusColor = { running: '#3498db', completed: '#2ecc71', failed: '#e74c3c', waiting: '#f39c12' };
 

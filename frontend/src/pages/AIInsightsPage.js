@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const API = 'http://localhost:3012/api';
+const API = process.env.REACT_APP_API_URL || '/api';
 const h = () => ({ 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` });
 
 async function aiPost(path, d) {

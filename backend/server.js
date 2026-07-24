@@ -25,6 +25,7 @@ app.use(express.json({ limit: '2mb' }));
 const auth = require('./middleware/auth');
 app.get('/api/health', (_req, res) => res.json({ status: 'ok', service: 'multi-agent-simulation-platform' }));
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/ai', require('./routes/ai'));
 app.use('/api/governed-runs', require('./routes/governedRuns')(auth));
 
 // Generated simulation, agent, AI, streaming, and gap routes are intentionally

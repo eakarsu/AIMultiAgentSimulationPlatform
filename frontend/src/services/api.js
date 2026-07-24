@@ -1,4 +1,4 @@
-const API = 'http://localhost:3012/api';
+const API = process.env.REACT_APP_API_URL || '/api';
 const h = () => ({ 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` });
 
 export const login = (email, password) =>
