@@ -2,9 +2,15 @@ const { Pool } = require('pg');
 require('dotenv').config({ path: require('path').join(__dirname, '../../.env') });
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
+function requireDemoPassword() {
+  const password = process.env.DEMO_PASSWORD || process.env.SEED_DEMO_PASSWORD || process.env.DEMO_SEED_PASSWORD || '';
+  if (password.length < 12 || password.length > 1024) throw new Error('DEMO_PASSWORD must contain 12-1024 characters');
+  return password;
+}
+
 async function seed() {
   const bcrypt = require('bcryptjs');
-  const hash = await bcrypt.hash('admin123', 10);
+  const hash = await bcrypt.hash(requireDemoPassword(), 10);
   await pool.query(`INSERT INTO users (email, password, name) VALUES ($1, $2, $3) ON CONFLICT (email) DO NOTHING`, ['admin@example.com', hash, 'Admin']);
 
   const sims = [
